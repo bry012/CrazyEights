@@ -26,9 +26,6 @@ public class HandPanel extends JPanel{
 	public HandPanel(Player player){
 		this.player = player;
 		newGame();
-	
-		
-	
 		
 	}
 	
@@ -37,7 +34,6 @@ public class HandPanel extends JPanel{
 		removeAll();
 		for(Card card : this.player.getHand()){
 			add(card.getImageLabel());
-			System.out.println(card.getImageLabel());
 			
 		}
 		

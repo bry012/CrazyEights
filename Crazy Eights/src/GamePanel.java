@@ -108,7 +108,6 @@ public class GamePanel extends JPanel{
 		scorePanel = new JPanel();
 		cardPanel.add(this.chooseSuit);
 		cardPanel.add(this.player1);
-		System.out.println(this.player1.getPlayer().getHand().get(0).getImage());
 		cardPanel.add(drawPile);
 		cardPanel.add(discardPile);
 		cardPanel.add(this.player2);
@@ -149,7 +148,7 @@ public class GamePanel extends JPanel{
 	}
 	
 	private void setPlayerLabelBackground(int index){
-		System.out.println(labelArray.size());
+		
 		this.labelArray.get(index).setBackground(Color.cyan);
 		this.labelArray.get(index).setOpaque(true);
 	}
@@ -225,7 +224,6 @@ public class GamePanel extends JPanel{
 				for(Card card : iterableCardArray){
 					if(e.getSource() == card.getImageLabel()){
 						
-						System.out.println("Fuck");
 						//checks if the face up card has the same suit or value as the clicked card.
 						if(lastCardPlayed.getSuit() == card.getSuit() || lastCardPlayed.getValue() == card.getValue() || card.getValue() == 8){
 							
@@ -250,11 +248,10 @@ public class GamePanel extends JPanel{
 								else
 									player2Score.setText(playerArray.get(index).getName() + " Score: " + playerArray.get(index).getScore());
 							}
-							System.out.println(currentPlayer.getName());
-							System.out.println(currentPlayer.getHand().size());
+							
 							if (currentPlayer.getHand().size() < 1){
 								endGame();
-								System.out.println("Fuck!!!");
+								
 							}
 							removePlayerLabelBackground(handPanelArray.indexOf(activeHandPanel));
 							switchPlayer();
