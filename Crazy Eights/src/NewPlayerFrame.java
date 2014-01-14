@@ -32,6 +32,7 @@ public class NewPlayerFrame extends JFrame{
 	JComboBox<Player> playersList;
 	JTextField input;
 	JDialog pane;
+	GamePanel panel;
 	
 	public NewPlayerFrame(ArrayList<Player> playerArray){
 		
@@ -45,10 +46,13 @@ public class NewPlayerFrame extends JFrame{
 		}
 		chosenPlayersArray = new ArrayList<Player>();
 		chosenPlayersArray.add(new Player("Computer"));
+		chosenPlayersArray.add(new Player("Computer 2"));
+		panel = new GamePanel(chosenPlayersArray);
 		title = new JLabel("Herro");
 		input = new JTextField(10);
 		submit = new JButton("Submit");
 		submit.addActionListener(new buttonListener());
+		panel.getMenu().addActionListener(new buttonListener());
 		JPanel panels = new JPanel();
 		panels.add(title);
 		panels.add(playersList);
@@ -69,18 +73,25 @@ public class NewPlayerFrame extends JFrame{
 	
 
 		public void createGame() {
-			
+			this.chosenPlayersArray.get(0).getHand().clear();
+			chosenPlayersArray.remove(1);
+			System.out.println(chosenPlayersArray.get(0).getName());
 			if(input.getText().equals("")){
 				chosenPlayersArray.add((Player) playersList.getSelectedItem());
 			}
 			
 			else{
-				chosenPlayersArray.add(new Player(input.getText()));
+				Player newPlayer = new Player(input.getText());
+				chosenPlayersArray.add(newPlayer);
+				playersList.addItem(newPlayer);
 			}
-				
-			GamePanel panel = new GamePanel(chosenPlayersArray);
+			remove(panel);	
+			panel = new GamePanel(chosenPlayersArray);
+			panel.getMenu().addActionListener(new buttonListener());
 			add(panel);
-				
+			revalidate();
+			repaint();
+			
 			setVisible(true);
 			pane.setVisible(false);
 			
@@ -102,9 +113,18 @@ public class NewPlayerFrame extends JFrame{
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 		 */
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent e) {
 			
-			createGame();
+			if(e.getSource() == submit){
+				createGame();
+			}
+			else if(e.getSource() == panel.getMenu()){
+				System.out.println("Menu Pressed");
+				setVisible(false);
+				pane.setVisible(true);
+				panel.getEndMenu().setVisible(false);
+				panel.resetPlayersScores();
+			}
 			
 		}
 	}	

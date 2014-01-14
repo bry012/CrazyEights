@@ -38,6 +38,10 @@ public class Player implements Comparable<Object>{
     	this.hand.add(card);
     }
     
+    public void resetScore(){
+    	this.score = 0;
+    }
+    
 	public int compareTo(Object o){
 		
 		//sets price equal to the price of the bike object passed as a parameter
