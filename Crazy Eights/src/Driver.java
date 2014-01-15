@@ -38,9 +38,6 @@ public class Driver {
 				player.setId(statsScan.nextInt());
 				player.setWins(statsScan.nextInt());
 				player.setLosses(statsScan.nextInt());
-				System.out.println(player.toString());
-				System.out.println(player.getWins());
-				System.out.println(player.getLosses());
 			}
 			
 		}

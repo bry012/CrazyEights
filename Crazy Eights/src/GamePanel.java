@@ -53,9 +53,6 @@ public class GamePanel extends JPanel{
 		
 		
 		this.playerArray = playerArray;
-		for(Player player : playerArray){
-			System.out.println(player.toString());
-		}
 		this.labelArray = new ArrayList<JLabel>();
 		this.handPanelArray = new ArrayList<HandPanel>();
 		this.chooseSuit = new JPanel();
@@ -135,7 +132,6 @@ public class GamePanel extends JPanel{
 	private void addMouseListener(){
 		
 		int arrayLength = playerArray.get(0).getHand().size();
-		System.out.println(arrayLength);
 		for(Player player : playerArray){
 			for(int i = 0; i < arrayLength; i++){
 				/*System.out.println(i);*/
@@ -161,7 +157,6 @@ public class GamePanel extends JPanel{
 	}
 	
 	private void setPlayerLabelBackground(int index){
-		System.out.println(labelArray.size());
 		this.labelArray.get(index).setBackground(Color.cyan);
 		this.labelArray.get(index).setOpaque(true);
 	}

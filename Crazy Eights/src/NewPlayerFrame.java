@@ -124,13 +124,10 @@ public class NewPlayerFrame extends JFrame{
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(panel.getSave());
-			System.out.println(e.getSource());
 			if(e.getSource() == submit){
 				createGame();
 			}
 			if(e.getSource() == panel.getMenu()){
-				System.out.println("Menu Pressed");
 				setVisible(false);
 				pane.setVisible(true);
 				panel.getEndMenu().setVisible(false);
@@ -138,12 +135,10 @@ public class NewPlayerFrame extends JFrame{
 			}
 			if(e.getSource() == panel.getSave()){
 				PrintWriter writer;
-				System.out.println("Hello");
 				try {
 					writer = new PrintWriter("./src/players/players.txt", "UTF-8");
 					for(Player player : playerArray){
 						writer.println(player.getName() + "," + player.getId() + "," + player.getWins() + "," + player.getLosses());
-						System.out.println(player.getName() + "," + player.getId() + "," + player.getWins() + "," + player.getLosses());
 
 					}
 					writer.close();
