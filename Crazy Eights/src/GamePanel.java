@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -38,7 +41,7 @@ public class GamePanel extends JPanel{
 	private JDialog endMenu = new JDialog();
 	private JPanel endMenuPanel;
 	private JLabel chooseSuitTitle = new JLabel("Choose a Suit:");
-	private JButton newGame,resumeGame, menu;
+	private JButton newGame,resumeGame, menu,save;
 	private JButton hearts = new JButton("Hearts");
 	private JButton diamonds = new JButton("Diamonds");
 	private JButton clubs = new JButton("Clubs");
@@ -50,6 +53,9 @@ public class GamePanel extends JPanel{
 		
 		
 		this.playerArray = playerArray;
+		for(Player player : playerArray){
+			System.out.println(player.toString());
+		}
 		this.labelArray = new ArrayList<JLabel>();
 		this.handPanelArray = new ArrayList<HandPanel>();
 		this.chooseSuit = new JPanel();
@@ -94,10 +100,12 @@ public class GamePanel extends JPanel{
 		resumeGame = new JButton("Resume Game");
 		resumeGame.addActionListener(new buttonListener());
 		menu = new JButton("Menu");
+		save = new JButton("Save");
 		
 		endMenuPanel.add(newGame);
 		endMenuPanel.add(resumeGame);
 		endMenuPanel.add(menu);
+		endMenuPanel.add(save);
 		endMenu.add(endMenuPanel);
 		endMenu.setPreferredSize(new Dimension(200,200));
 		endMenu.pack();
@@ -119,6 +127,7 @@ public class GamePanel extends JPanel{
 		add(cardPanel);
 		add(scorePanel);
 		setLayout(null);
+		
 		cardPanel.setBounds(400, 0, 700, 700);
 		scorePanel.setBounds(10, 10, 200, 200);
 	}
@@ -175,9 +184,15 @@ public class GamePanel extends JPanel{
 		}
 	}
 	
-	private void endGame(){
+	private void endGame(Player currentPlayer){
 		this.endMenu.setVisible(true);
 		for(Player player : playerArray){
+			if(player.equals(currentPlayer)){
+				player.setWins(player.getWins() + 1);
+			}
+			else{
+				player.setLosses(player.getLosses() + 1);
+			}
 			player.getHand().clear();
 		}
 	}
@@ -257,7 +272,6 @@ public class GamePanel extends JPanel{
 				for(Card card : iterableCardArray){
 					if(e.getSource() == card.getImageLabel()){
 						
-						System.out.println("Fuck");
 						//checks if the face up card has the same suit or value as the clicked card.
 						if(lastCardPlayed.getSuit() == card.getSuit() || lastCardPlayed.getValue() == card.getValue() || card.getValue() == 8){
 							
@@ -282,10 +296,9 @@ public class GamePanel extends JPanel{
 								else
 									player2Score.setText(playerArray.get(index).getName() + " Score: " + playerArray.get(index).getScore());
 							}
-							System.out.println(currentPlayer.getName());
-							System.out.println(currentPlayer.getHand().size());
+
 							if (currentPlayer.getHand().size() < 1){
-								endGame();
+								endGame(currentPlayer);
 							}
 							switchPlayer();
 						
@@ -330,5 +343,12 @@ public class GamePanel extends JPanel{
 	 */
 	public JPanel getEndMenuPanel() {
 		return endMenuPanel;
+	}
+
+	/**
+	 * @return the save
+	 */
+	public JButton getSave() {
+		return save;
 	}
 }

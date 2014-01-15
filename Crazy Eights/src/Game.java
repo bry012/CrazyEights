@@ -14,8 +14,8 @@ import java.util.Collections;
 
 public class Game {
 	
-	private int winnterId;
-	private int loserId;
+	private String winnerName;
+	private String loserName;
 	private ArrayList<Player> playerArray;
 	private int playerArraySize;
 	private Deck deck;
@@ -53,36 +53,36 @@ public class Game {
 	public void calcWinner(){
 		
 		Collections.sort(playerArray, Collections.reverseOrder());
-		this.winnterId = playerArray.get(0).getId();
-		this.loserId = playerArray.get(1).getId();
+		this.winnerName = playerArray.get(0).getName();
+		this.loserName = playerArray.get(1).getName();
 	}
 
 	/**
-	 * @return the winnterId
+	 * @return the winnerName
 	 */
-	public int getWinnterId() {
-		return winnterId;
+	public String getWinnterName() {
+		return winnerName;
 	}
 
 	/**
-	 * @param winnterId the winnterId to set
+	 * @param winnerName the winnerName to set
 	 */
-	public void setWinnterId(int winnterId) {
-		this.winnterId = winnterId;
+	public void setWinnerName(String winnerName) {
+		this.winnerName = winnerName;
 	}
 
 	/**
-	 * @return the loserId
+	 * @return the loserName
 	 */
-	public int getLoserId() {
-		return loserId;
+	public String getLoserId() {
+		return loserName;
 	}
 
 	/**
-	 * @param loserId the loserId to set
+	 * @param loserName the loserName to set
 	 */
-	public void setLoserId(int loserId) {
-		this.loserId = loserId;
+	public void setLoserId(String loserName) {
+		this.loserName = loserName;
 	}
 
 	/**

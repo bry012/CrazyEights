@@ -1,6 +1,9 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -40,19 +43,24 @@ public class NewPlayerFrame extends JFrame{
 		pane.setTitle("Hello");
 		pane.setPreferredSize(new Dimension(200,200));
 		this.playerArray = playerArray;
+		chosenPlayersArray = new ArrayList<Player>();
 		playersList = new JComboBox<Player>();
 		for(Player player : playerArray){
-			playersList.addItem(player);
+			if (player.getName().equals("Computer")){
+				chosenPlayersArray.add(player);
+			}
+			
+			else{
+				playersList.addItem(player);
+			}
 		}
-		chosenPlayersArray = new ArrayList<Player>();
-		chosenPlayersArray.add(new Player("Computer"));
+		
 		chosenPlayersArray.add(new Player("Computer 2"));
 		panel = new GamePanel(chosenPlayersArray);
 		title = new JLabel("Herro");
 		input = new JTextField(10);
 		submit = new JButton("Submit");
 		submit.addActionListener(new buttonListener());
-		panel.getMenu().addActionListener(new buttonListener());
 		JPanel panels = new JPanel();
 		panels.add(title);
 		panels.add(playersList);
@@ -66,6 +74,7 @@ public class NewPlayerFrame extends JFrame{
 		setPreferredSize(new Dimension(500,500));
 		pack();
 		setVisible(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pane.setVisible(true);
 		
 		
@@ -75,7 +84,6 @@ public class NewPlayerFrame extends JFrame{
 		public void createGame() {
 			this.chosenPlayersArray.get(0).getHand().clear();
 			chosenPlayersArray.remove(1);
-			System.out.println(chosenPlayersArray.get(0).getName());
 			if(input.getText().equals("")){
 				chosenPlayersArray.add((Player) playersList.getSelectedItem());
 			}
@@ -83,11 +91,13 @@ public class NewPlayerFrame extends JFrame{
 			else{
 				Player newPlayer = new Player(input.getText());
 				chosenPlayersArray.add(newPlayer);
+				playerArray.add(newPlayer);
 				playersList.addItem(newPlayer);
 			}
 			remove(panel);	
 			panel = new GamePanel(chosenPlayersArray);
 			panel.getMenu().addActionListener(new buttonListener());
+			panel.getSave().addActionListener(new buttonListener());
 			add(panel);
 			revalidate();
 			repaint();
@@ -114,16 +124,37 @@ public class NewPlayerFrame extends JFrame{
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			System.out.println(panel.getSave());
+			System.out.println(e.getSource());
 			if(e.getSource() == submit){
 				createGame();
 			}
-			else if(e.getSource() == panel.getMenu()){
+			if(e.getSource() == panel.getMenu()){
 				System.out.println("Menu Pressed");
 				setVisible(false);
 				pane.setVisible(true);
 				panel.getEndMenu().setVisible(false);
 				panel.resetPlayersScores();
+			}
+			if(e.getSource() == panel.getSave()){
+				PrintWriter writer;
+				System.out.println("Hello");
+				try {
+					writer = new PrintWriter("./src/players/players.txt", "UTF-8");
+					for(Player player : playerArray){
+						writer.println(player.getName() + "," + player.getId() + "," + player.getWins() + "," + player.getLosses());
+						System.out.println(player.getName() + "," + player.getId() + "," + player.getWins() + "," + player.getLosses());
+
+					}
+					writer.close();
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (UnsupportedEncodingException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 			
 		}

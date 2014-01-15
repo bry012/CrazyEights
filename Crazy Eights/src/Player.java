@@ -16,13 +16,15 @@ import java.util.ArrayList;
 public class Player implements Comparable<Object>{
 	
 	private String name;
-	private int id;
-	private int score;
+	private int wins,losses,id,score;
+	
     private ArrayList<Card> hand = new ArrayList<Card>();
     
     public Player(String name){
     	
     	this.name = name;
+    	this.wins = 0;
+    	this.losses = 0;
     }
     
     public Card playCard(int cardIndex){
@@ -104,6 +106,41 @@ public class Player implements Comparable<Object>{
 	 */
 	public ArrayList<Card> getHand() {
 		return hand;
+	}
+
+	/**
+	 * @return the wins
+	 */
+	public int getWins() {
+		return wins;
+	}
+
+	/**
+	 * @param wins the wins to set
+	 */
+	public void setWins(int wins) {
+		this.wins = wins;
+	}
+
+	/**
+	 * @return the losses
+	 */
+	public int getLosses() {
+		return losses;
+	}
+
+	/**
+	 * @param losses the losses to set
+	 */
+	public void setLosses(int losses) {
+		this.losses = losses;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
     
 }
